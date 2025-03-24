@@ -1,5 +1,5 @@
 const login = async (email: string, password: string) => {
-	const response = await fetch("server://server:8080/login", {
+	const response = await fetch("http://localhost:8080/login", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

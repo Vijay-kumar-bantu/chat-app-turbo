@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Search, UserPlus, Check, X as XMark } from "lucide-react";
-import { mockSearchResults } from "../../data/mockFriends";
 import { useAuth } from "../../context/AuthContext";
-
+import findUsers from "../../api/findUsers";
+import sendRequest from "../../api/send-request";
+import addFriend from "../../api/add-friend";
 interface FriendRequestsModalProps {
 	isOpen: boolean;
 	onClose: () => void;
@@ -16,6 +17,16 @@ export function FriendRequestsModal({
 	const [activeTab, setActiveTab] = useState<"requests" | "search">("requests");
 	const [searchQuery, setSearchQuery] = useState("");
 	const { user } = useAuth();
+	const [users, setUsers] = useState<any[]>([]);
+	useEffect(() => {
+		const fetchUsers = async () => {
+			const users = await findUsers(user?.id || "");
+			setUsers(users);
+		};
+		if (user?.id) {
+			fetchUsers();
+		}
+	}, [user?.id]);
 
 	const modalVariants = {
 		hidden: { opacity: 0, scale: 0.95 },
@@ -120,7 +131,12 @@ export function FriendRequestsModal({
 													</div>
 													<div className="flex space-x-2">
 														<button className="p-2 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-full">
-															<Check className="w-5 h-5" />
+															<Check
+																className="w-5 h-5"
+																onClick={() =>
+																	addFriend(user?.id || "", request._id)
+																}
+															/>
 														</button>
 														<button className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full">
 															<XMark className="w-5 h-5" />
@@ -153,7 +169,7 @@ export function FriendRequestsModal({
 											/>
 											<Search className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" />
 										</div>
-										{mockSearchResults.map((result) => (
+										{users.map((result) => (
 											<motion.div
 												key={result.id}
 												initial={{ x: -20, opacity: 0 }}
@@ -170,7 +186,7 @@ export function FriendRequestsModal({
 														<h3 className="font-medium text-gray-900 dark:text-white">
 															{result.name}
 														</h3>
-														<p className="text-sm text-gray-500 dark:text-gray-400">
+														{/* <p className="text-sm text-gray-500 dark:text-gray-400">
 															{result.status === "online" ? (
 																<span className="flex items-center">
 																	<span className="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
@@ -179,11 +195,16 @@ export function FriendRequestsModal({
 															) : (
 																`Last seen ${result.lastSeen}`
 															)}
-														</p>
+														</p> */}
 													</div>
 												</div>
 												<button className="p-2 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-full">
-													<UserPlus className="w-5 h-5" />
+													<UserPlus
+														className="w-5 h-5"
+														onClick={() =>
+															sendRequest(user?.id || "", result.id)
+														}
+													/>
 												</button>
 											</motion.div>
 										))}

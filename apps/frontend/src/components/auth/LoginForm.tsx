@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 
 export function LoginForm() {
 	const [email, setEmail] = useState("demo@example.com");
-	const [password, setPassword] = useState("demo123");
+	const [password, setPassword] = useState("123456");
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
 	const { addUser } = useAuth();

@@ -1,18 +1,3 @@
-# FROM node:18-alpine
-
-# WORKDIR /frontend
-
-# COPY package*.json ./   
-
-# RUN npm install
-
-# COPY . .
-
-# # RUN npm run build
-
-# EXPOSE 5173
-
-# CMD ["npm", "run", "dev"]
 
 FROM node:18-alpine AS base
 RUN corepack enable
@@ -33,7 +18,6 @@ COPY . .
 RUN pnpm install
 
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
-# Assuming "web" is the name entered in the project's package.json: { name: "web" }
 RUN turbo prune frontend --docker
  
 # Add lockfile and package.json's of isolated subworkspace
@@ -50,13 +34,14 @@ RUN pnpm install
 COPY --from=builder /frontend/out/full/ .
 RUN pnpm turbo build
  
-FROM base AS runner
+FROM nginx:alpine AS production
 WORKDIR /frontend
- 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Don't run production as root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
+# RUN addgroup --system --gid 1001 nodejs
+# RUN adduser --system --uid 1001 nextjs
+# USER nextjs
  
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
@@ -64,7 +49,8 @@ USER nextjs
 # COPY --from=installer --chown=nextjs:nodejs /app/apps/frontend/.next/static ./apps/frontend/.next/static
 # COPY --from=installer --chown=nextjs:nodejs /app/apps/frontend/public ./apps/frontend/public
  
-COPY --from=installer /frontend .
-EXPOSE 3000
+COPY --from=installer /frontend/apps/frontend/dist /usr/share/nginx/html
 
-CMD ["pnpm", "start"]
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

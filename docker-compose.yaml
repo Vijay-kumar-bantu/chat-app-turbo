@@ -1,7 +1,7 @@
 version: "1.0"
 services:
   mongodb:
-    image: mongo
+    image: mongo:latest
     container_name: mongodb123
     volumes:
       - mongo_data:/data/db
@@ -27,13 +27,14 @@ services:
       dockerfile: ./apps/frontend/Dockerfile
     container_name: application
     volumes:
-      - /frontend/src
+      - /data/src
     ports:
-      - "3000:3000"
+      - "80:80"
     depends_on:
       - mongodb
       - server
     environment:
       - WATCHPACK_POLLING=true
+      - VITE_API_URL=http://server:8080
 volumes:
   mongo_data:

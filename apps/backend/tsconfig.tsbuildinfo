@@ -1,1 +1,1 @@
-{"root":["./src/aes.ts","./src/constants.ts","./src/index.ts","./src/types.ts","./src/schema/user.ts"],"version":"5.8.2"}
+{"root":["./src/aes.ts","./src/index.ts","./src/types.ts","./src/routes/authroute.ts","./src/routes/friendroute.ts","./src/schema/user.ts"],"version":"5.8.2"}

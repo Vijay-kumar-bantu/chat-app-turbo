@@ -1,0 +1,133 @@
+{
+	"projectType": "monorepo",
+	"technologies": {
+		"turborepo": {
+			"root": true,
+			"workspaces": [
+				"apps/*",
+				"packages/*"
+			],
+			"configFile": "turbo.json",
+			"packages": {
+				"ui": {
+					"type": "package",
+					"patterns": [
+						"packages/ui/**/*"
+					],
+					"configFiles": [
+						"packages/ui/package.json",
+						"packages/ui/tsconfig.json"
+					]
+				},
+				"utils": {
+					"type": "package",
+					"patterns": [
+						"packages/utils/**/*"
+					],
+					"configFiles": [
+						"packages/utils/package.json",
+						"packages/utils/tsconfig.json"
+					]
+				}
+			}
+		},
+		"nodejs": {
+			"version": ">=18.0.0",
+			"packageManager": "pnpm",
+			"configFiles": [
+				"package.json",
+				"pnpm-workspace.yaml",
+				"pnpm-lock.yaml",
+				"tsconfig.json"
+			]
+		},
+		"express": {
+			"framework": "express",
+			"configFiles": [
+				"server.js",
+				"app.js"
+			],
+			"patterns": [
+				"routes/*",
+				"controllers/*",
+				"middleware/*",
+				"models/*"
+			]
+		},
+		"react": {
+			"framework": "react",
+			"configFiles": [
+				"vite.config.ts",
+				"tsconfig.json"
+			],
+			"patterns": [
+				"src/components/*",
+				"src/pages/*",
+				"src/hooks/*",
+				"src/utils/*"
+			]
+		},
+		"docker": {
+			"configFiles": [
+				"Dockerfile",
+				"docker-compose.yml"
+			],
+			"patterns": [
+				"*.dockerfile",
+				"docker/*"
+			]
+		}
+	},
+	"filePatterns": {
+		"typescript": [
+			"**/*.ts",
+			"**/*.tsx"
+		],
+		"javascript": [
+			"**/*.js",
+			"**/*.jsx"
+		],
+		"styles": [
+			"**/*.css",
+			"**/*.scss",
+			"**/*.less",
+			"**/*.tailwind.config.js",
+			"**/*.postcss.config.js"
+		],
+		"config": [
+			"**/*.json",
+			"**/*.yml",
+			"**/*.yaml"
+		]
+	},
+	"ignore": [
+		"node_modules",
+		".git",
+		"dist",
+		"build",
+		".turbo",
+		".next",
+		"coverage",
+		".pnpm-store"
+	],
+	"linting": {
+		"typescript": {
+			"strict": true,
+			"eslint": true
+		},
+		"react": {
+			"eslint": true,
+			"prettier": true
+		}
+	},
+	"styling": {
+		"tailwindcss": {
+			"configFile": "tailwind.config.js",
+			"patterns": [
+				"**/*.css",
+				"**/*.tsx",
+				"**/*.jsx"
+			]
+		}
+	}
+}

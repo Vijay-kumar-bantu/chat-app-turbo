@@ -4,18 +4,29 @@ import user from "../schema/user";
 const friendRouter: Router = express.Router();
 
 friendRouter.post("/all-users", async (req, res) => {
-	const { id } = req.body;
-	const users = await user.find({
-		_id: { $ne: id },
-	});
-	res.status(200).json({
-		users: users.map((user) => ({
-			id: user._id,
-			name: user.name,
-			email: user.email,
-			avatar: user.avatar,
-		})),
-	});
+	try {
+		const { id } = req.body;
+		const currentUser = await user.findById(id);
+		const users = await user.find({
+			_id: {
+				$ne: id,
+				$nin: [
+					...(currentUser?.friends || []),
+					...(currentUser?.requests || []),
+				],
+			},
+		});
+		res.status(200).json({
+			users: users.map((user) => ({
+				id: user._id,
+				name: user.name,
+				email: user.email,
+				avatar: user.avatar,
+			})),
+		});
+	} catch (err) {
+		res.status(400).send("Server error");
+	}
 });
 
 /* Sending requests */

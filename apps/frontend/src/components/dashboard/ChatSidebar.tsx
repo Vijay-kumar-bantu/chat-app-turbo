@@ -32,9 +32,13 @@ export function ChatSidebar({ selectedChat, onSelectChat }: ChatSidebarProps) {
 			>
 				<div className="p-4 border-b border-gray-200 dark:border-gray-700">
 					<div className="flex items-center justify-between mb-4">
-						<h1 className="text-xl font-bold text-gray-900 dark:text-white">
-							Chats
-						</h1>
+						<div>
+							<img
+								src={user?.avatar}
+								alt={user?.name}
+								className="w-9 h-9 rounded-full"
+							/>
+						</div>
 						<div className="flex items-center space-x-2">
 							<motion.button
 								whileHover={{ scale: 1.1 }}

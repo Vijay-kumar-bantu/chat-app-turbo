@@ -26,7 +26,7 @@ export function FriendRequestsModal({
 		if (user?.id) {
 			fetchUsers();
 		}
-	}, [user?.id]);
+	}, []);
 
 	const modalVariants = {
 		hidden: { opacity: 0, scale: 0.95 },

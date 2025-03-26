@@ -1,11 +1,14 @@
 import React, { createContext, useContext, useState } from "react";
 import { User, AuthContextType, UserMessages } from "../types/auth";
+// import useSocket from "../hooks/useSocket";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [user, setUser] = useState<User | null>(null);
 	const [userMessages, setUserMessages] = useState<UserMessages | null>(null);
+	const [onlineUsers, setOnlineUsers] = useState<Set<string>>(new Set());
+	// const socket = useSocket();
 
 	const addUser = (user: User) => {
 		setUser(user);
@@ -25,6 +28,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const logout = () => {
 		setUser(null);
 		setUserMessages(null);
+		// if (socket) {
+		// 	socket.close();
+		// }
 	};
 
 	return (
@@ -36,6 +42,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 				addUserMessages,
 				logout,
 				isAuthenticated: !!user,
+				onlineUsers,
+				setOnlineUsers,
 			}}
 		>
 			{children}

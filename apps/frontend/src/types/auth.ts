@@ -18,6 +18,8 @@ export interface User {
 
 export interface AuthContextType {
 	user: User | null;
+	onlineUsers: Set<string>;
+	setOnlineUsers: React.Dispatch<React.SetStateAction<Set<string>>>;
 	userMessages: UserMessages | null;
 	addUserMessages: (
 		from: string,

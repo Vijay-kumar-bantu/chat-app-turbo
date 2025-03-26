@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FriendRequestsModal } from "../friends/FriendRequestsModal";
 import { Friend } from "../../types/auth";
+import useSocket from "../../hooks/useSocket";
 
 interface ChatSidebarProps {
 	selectedChat: Friend | null;
@@ -14,13 +15,15 @@ interface ChatSidebarProps {
 
 export function ChatSidebar({ selectedChat, onSelectChat }: ChatSidebarProps) {
 	const { theme, toggleTheme } = useTheme();
-	const { logout, user, userMessages } = useAuth();
+	const { logout, user, userMessages, onlineUsers } = useAuth();
 	const navigate = useNavigate();
 	const [isRequestsModalOpen, setIsRequestsModalOpen] = useState(false);
+	const socket = useSocket();
 
 	const handleLogout = () => {
 		logout();
 		navigate("/login");
+		socket?.close();
 	};
 
 	return (
@@ -96,12 +99,23 @@ export function ChatSidebar({ selectedChat, onSelectChat }: ChatSidebarProps) {
 										: ""
 								}`}
 							>
-								<div>
+								<div className="relative">
 									<img
 										src={friend.avatar}
 										alt={friend.name}
 										className="w-10 h-10 rounded-full"
 									/>
+									<div className="absolute bottom-0 -right-1">
+										{onlineUsers.has(friend._id) ? (
+											<span className="flex items-center">
+												<span className="w-3 h-3 bg-green-500 rounded-full mr-1"></span>
+											</span>
+										) : (
+											<span className="flex items-center">
+												<span className="w-3 h-3 bg-gray-500 rounded-full mr-1"></span>
+											</span>
+										)}
+									</div>
 								</div>
 								<div className="flex-1 text-left">
 									<h3 className="font-medium text-gray-900 dark:text-white">

@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function useSocket() {
 	const [socket, setSocket] = useState<WebSocket | null>(null);
-	const { user, addUserMessages } = useAuth();
+	const { user, addUserMessages, setOnlineUsers } = useAuth();
 
 	useEffect(() => {
 		if (user?.id) {
@@ -14,7 +14,6 @@ export default function useSocket() {
 			webSocket.onopen = () => {
 				const data = JSON.stringify({ type: "connect", id: user?.id });
 				webSocket.send(data);
-				console.log("WebSocket connection opened");
 			};
 
 			//message event
@@ -23,6 +22,24 @@ export default function useSocket() {
 
 				if (message.type === "message") {
 					addUserMessages(message.from, "receiver", message.message);
+				}
+
+				if (message.type === "onlineUsers") {
+					message.users.forEach((user: string) => {
+						setOnlineUsers((prev) => new Set([...prev, user]));
+					});
+				}
+
+				if (message.type === "userStatus") {
+					if (message.isOnline) {
+						setOnlineUsers((prev) => new Set([...prev, message.userId]));
+					} else {
+						setOnlineUsers((prev) => {
+							const newSet = new Set(prev);
+							newSet.delete(message.userId);
+							return newSet;
+						});
+					}
 				}
 			};
 		}
@@ -33,7 +50,7 @@ export default function useSocket() {
 				socket.close();
 			}
 		};
-	}, []);
+	}, [user?.id]);
 
 	return socket;
 }

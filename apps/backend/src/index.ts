@@ -36,6 +36,7 @@ const wss = new WebSocketServer({
 });
 
 const clients: client = {};
+const onlineUsers: Set<string> = new Set();
 
 //websocket events
 wss.on("connection", function connection(ws: WebSocket) {
@@ -48,7 +49,16 @@ wss.on("connection", function connection(ws: WebSocket) {
 		switch (message.type) {
 			case "connect":
 				clients[message.id] = ws;
-				ws.send("user added");
+				onlineUsers.add(message.id);
+				// Broadcast to all clients that this user is online
+				broadcastUserStatus(message.id, true);
+				// Send current online users to the new connection
+				ws.send(
+					JSON.stringify({
+						type: "onlineUsers",
+						users: Array.from(onlineUsers),
+					})
+				);
 				break;
 			case "message":
 				if (clients[message.to]) {
@@ -63,11 +73,33 @@ wss.on("connection", function connection(ws: WebSocket) {
 	});
 
 	ws.on("close", () => {
-		Object.keys(clients).forEach((key: any) => {
+		let disconnectedUserId: string | null = null;
+		Object.keys(clients).forEach((key: string) => {
 			if (clients[key] === ws) {
+				disconnectedUserId = key;
 				delete clients[key];
-				console.log("Client disconnected");
+				onlineUsers.delete(key);
 			}
 		});
+
+		if (disconnectedUserId) {
+			// Broadcast to all clients that this user is offline
+			broadcastUserStatus(disconnectedUserId, false);
+		}
 	});
 });
+
+// Helper function to broadcast user status changes
+function broadcastUserStatus(userId: string, isOnline: boolean) {
+	const statusMessage = JSON.stringify({
+		type: "userStatus",
+		userId,
+		isOnline,
+	});
+
+	Object.values(clients).forEach((client) => {
+		if (client.readyState === WebSocket.OPEN) {
+			client.send(statusMessage);
+		}
+	});
+}

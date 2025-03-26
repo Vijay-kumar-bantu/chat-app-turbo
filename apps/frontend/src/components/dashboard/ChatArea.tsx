@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
 import { Friend, message } from "../../types/auth";
 import { useAuth } from "../../context/AuthContext";
+import useSocket from "../../hooks/useSocket";
 
 interface ChatAreaProps {
 	selectedChat: Friend | null;
-	socket: WebSocket | null;
 }
 
-export function ChatArea({ selectedChat, socket }: ChatAreaProps) {
-	const { user, addUserMessages, userMessages } = useAuth();
+export function ChatArea({ selectedChat }: ChatAreaProps) {
+	const { user, addUserMessages, userMessages, onlineUsers } = useAuth();
 	const [message, setMessage] = useState("");
 	const [messages, setMessages] = useState<message[]>([]);
+	const socket = useSocket();
 
 	useEffect(() => {
 		if (userMessages?.[selectedChat?._id || ""]) {
 			setMessages(userMessages[selectedChat?._id || ""]);
+		} else {
+			setMessages([]);
 		}
 	}, [userMessages, selectedChat]);
 
 	const handleSend = () => {
 		if (message.trim() && selectedChat?._id) {
-			// In a real app, this would send the message
+			if (!onlineUsers.has(selectedChat._id)) {
+				alert("User is offline");
+				return;
+			}
 			user?.friends?.map((friend) => {
 				if (friend._id === selectedChat?._id) {
 					friend.lastMessage = message;
@@ -35,7 +41,6 @@ export function ChatArea({ selectedChat, socket }: ChatAreaProps) {
 				})
 			);
 			addUserMessages(selectedChat?._id, "sender", message);
-			//setMessages([...messages, { type: "sender", message }]);
 			setMessage("");
 		}
 	};
@@ -65,13 +70,16 @@ export function ChatArea({ selectedChat, socket }: ChatAreaProps) {
 						{selectedChat.name}
 					</h2>
 					<p className="text-sm text-gray-500 dark:text-gray-400">
-						{true ? (
+						{onlineUsers.has(selectedChat._id) ? (
 							<span className="flex items-center">
 								<span className="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
 								Online
 							</span>
 						) : (
-							`Last seen`
+							<span className="flex items-center">
+								<span className="w-2 h-2 bg-gray-500 rounded-full mr-1"></span>
+								Offline
+							</span>
 						)}
 					</p>
 				</div>

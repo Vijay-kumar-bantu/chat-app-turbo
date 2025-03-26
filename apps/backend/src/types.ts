@@ -1,7 +1,7 @@
 import { WebSocket } from "ws";
 
 interface client {
-	[key: number]: WebSocket;
+	[key: string]: WebSocket;
 }
 
 export default client;

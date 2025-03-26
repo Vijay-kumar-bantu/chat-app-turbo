@@ -1,8 +1,8 @@
-import express, { Router } from "express";
+import { Router } from "express";
 import { decrypt, encrypt } from "@repo/utils/aes";
 import user from "../schema/user";
 
-const authRouter: Router = express.Router();
+const authRouter: Router = Router();
 
 /*login route */
 authRouter.post("/login", async (req, res) => {

@@ -1,7 +1,7 @@
-import express, { Router } from "express";
+import { Router } from "express";
 import user from "../schema/user";
 
-const friendRouter: Router = express.Router();
+const friendRouter: Router = Router();
 
 friendRouter.post("/all-users", async (req, res) => {
 	try {

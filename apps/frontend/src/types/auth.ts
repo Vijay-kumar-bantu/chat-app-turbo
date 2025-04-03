@@ -27,6 +27,7 @@ export interface AuthContextType {
 		message: string
 	) => void;
 	addUser: (user: User) => void;
+	addUserFriend: (friend: Friend) => void;
 	logout: () => void;
 	isAuthenticated: boolean;
 }

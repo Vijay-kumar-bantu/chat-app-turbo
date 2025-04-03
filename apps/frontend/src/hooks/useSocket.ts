@@ -6,8 +6,8 @@ export default function useSocket() {
 	const { user, addUserMessages, setOnlineUsers } = useAuth();
 
 	useEffect(() => {
+		const webSocket = new WebSocket("ws://localhost:8080");
 		if (user?.id) {
-			const webSocket = new WebSocket("ws://localhost:8080");
 			setSocket(webSocket);
 
 			//connecting socket to clients data on open
@@ -46,8 +46,8 @@ export default function useSocket() {
 
 		//closing socket on unmount
 		return () => {
-			if (socket) {
-				socket.close();
+			if (webSocket) {
+				webSocket.close();
 			}
 		};
 	}, [user?.id]);

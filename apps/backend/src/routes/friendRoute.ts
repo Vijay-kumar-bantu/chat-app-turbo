@@ -61,7 +61,12 @@ friendRouter.post("/add-friend", async (req, res) => {
 			);
 			await customer.save();
 			await friend.save();
-			res.status(200).send("Friend request accepted");
+			res.status(200).send({
+				_id: friend._id,
+				name: friend.name,
+				email: friend.email,
+				avatar: friend.avatar,
+			});
 		} else {
 			res.status(400).send("Server error");
 		}

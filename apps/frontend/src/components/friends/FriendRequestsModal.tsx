@@ -16,7 +16,7 @@ export function FriendRequestsModal({
 }: FriendRequestsModalProps) {
 	const [activeTab, setActiveTab] = useState<"requests" | "search">("requests");
 	const [searchQuery, setSearchQuery] = useState("");
-	const { user } = useAuth();
+	const { user, addUserFriend } = useAuth();
 	const [users, setUsers] = useState<any[]>([]);
 	useEffect(() => {
 		const fetchUsers = async () => {
@@ -38,6 +38,29 @@ export function FriendRequestsModal({
 		hidden: { opacity: 0 },
 		visible: { opacity: 1 },
 		exit: { opacity: 0 },
+	};
+
+	const handleAddfriend = async (id: string, friendId: string) => {
+		const response = await addFriend(id, friendId);
+		if (response.ok) {
+			const data = await response.json();
+			addUserFriend(data);
+			onClose();
+			alert("Friend added successfully");
+		} else {
+			alert("Error adding friend");
+		}
+	};
+
+	const handleSendRequest = async (id: string, friendId: string) => {
+		const response = await sendRequest(id, friendId);
+		if (response.ok) {
+			// const data = await response.json();
+			onClose();
+			alert("Friend request sent successfully");
+		} else {
+			alert("Error sending friend request");
+		}
 	};
 
 	return (
@@ -134,7 +157,7 @@ export function FriendRequestsModal({
 															<Check
 																className="w-5 h-5"
 																onClick={() =>
-																	addFriend(user?.id || "", request._id)
+																	handleAddfriend(user?.id || "", request._id)
 																}
 															/>
 														</button>
@@ -202,7 +225,7 @@ export function FriendRequestsModal({
 													<UserPlus
 														className="w-5 h-5"
 														onClick={() =>
-															sendRequest(user?.id || "", result.id)
+															handleSendRequest(user?.id || "", result.id)
 														}
 													/>
 												</button>

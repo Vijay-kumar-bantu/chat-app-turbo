@@ -1,32 +1,35 @@
-# Turborepo starter
+# ChatApp Turbo
 
-This Turborepo starter is maintained by the Turborepo core team.
+This is a monorepo for the ChatApp Turbo project, built using Turborepo.
 
-## Using this example
+## Using this project
 
-Run the following command:
+To get started, clone the repository and install dependencies:
 
 ```sh
-npx create-turbo@latest
+git clone https://github.com/Vijay-kumar-bantu/chat-app-turbo
+cd chatapp-turbo
+pnpm install
 ```
 
 ## What's inside?
 
-This Turborepo includes the following packages/apps:
+This monorepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `Frontend`: a [React.js](https://reactjs.org/) app for the chat interface
+- `backend`: a Node & express js server
+- `@chatapp/ui`: a shared React component library used by both `Frontend` application
+- `@chatapp/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@chatapp/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `@chatapp/utils`: useful functions through out the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ### Utilities
 
-This Turborepo has some additional tools already setup for you:
+This monorepo has the following tools pre-configured:
 
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [ESLint](https://eslint.org/) for code linting
@@ -36,8 +39,7 @@ This Turborepo has some additional tools already setup for you:
 
 To build all apps and packages, run the following command:
 
-```
-cd my-turborepo
+```sh
 pnpm build
 ```
 
@@ -45,40 +47,43 @@ pnpm build
 
 To develop all apps and packages, run the following command:
 
-```
-cd my-turborepo
+```sh
 pnpm dev
 ```
 
-### Remote Caching
+### Docker Setup
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+To run the application using Docker, ensure you have Docker and Docker Compose installed on your system. Then, follow these steps:
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+1. Build the Docker images and start the containers:
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+   ```sh
+   docker-compose up --build
+   ```
 
-```
-cd my-turborepo
-npx turbo login
-```
+2. The application will be available at the respective ports defined in the `docker-compose.yml` file.
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+3. To stop the containers, use:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+   ```sh
+   docker-compose down
+   ```
 
-```
-npx turbo link
-```
+Make sure to check the `docker-compose.yml` file for configuration details.
 
-## Useful Links
+### Screenshots
 
-Learn more about the power of Turborepo:
+Here are some screenshots of the application:
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+#### Landing Page
+
+![Landing Page](./assets/chat-app-landing.png)
+
+#### Chat Interface
+
+![Chat Interface](./assets/chat-app-chat.png)
+
+## Author
+
+**Vijay Kumar Bantu**  
+Email: [capvijju24@gmail.com](mailto:capvijju24@gmail.com)

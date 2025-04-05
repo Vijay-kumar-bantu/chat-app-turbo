@@ -1,9 +1,10 @@
 const sendRequest = async (id: string, friendId: string) => {
 	console.log(id, friendId);
-	const response = await fetch("http://localhost:8080/friend/send-request", {
+	const response = await fetch(import.meta.env.VITE_SEND_REQUEST_API, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
+			Authorization: `Bearer ${id}`,
 		},
 		body: JSON.stringify({ id: id, friendId: friendId }),
 	});

@@ -1,8 +1,9 @@
 const addFriend = async (id: string, friendId: string) => {
-	const response = await fetch("http://localhost:8080/friend/add-friend", {
+	const response = await fetch(import.meta.env.VITE_ADD_FRIEND_API, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
+			Authorization: `Bearer ${id}`,
 		},
 		body: JSON.stringify({ id: id, friendId: friendId }),
 	});

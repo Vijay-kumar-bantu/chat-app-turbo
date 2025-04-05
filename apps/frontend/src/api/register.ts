@@ -1,5 +1,5 @@
 const register = async (name: string, email: string, password: string) => {
-	const response = await fetch("http://localhost:8080/auth/register", {
+	const response = await fetch(import.meta.env.VITE_REGISTER_API, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

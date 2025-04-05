@@ -4,19 +4,18 @@ RUN corepack enable
 FROM base AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat
+
 # Set working directory
 WORKDIR /backend
-# Replace <your-major-version> with the major version installed in your repository. For example:
-# RUN yarn global add turbo@^2
-# RUN npm install -g pnpm
+
+#Install turbo globally
 RUN npm install -g turbo
-#RUN npm install -g pnpm
 
 # Copy package files and turbo config
 COPY . .
 
 # Install dependencies
-RUN pnpm install
+# RUN pnpm install
 
 # Copy the rest of the source code
 # COPY . .
@@ -37,6 +36,7 @@ RUN pnpm install
  
 # Build the project
 COPY --from=builder /backend/out/full/ .
+COPY ./apps/backend/.env.prod ./apps/backend/.env
 RUN pnpm run build
  
 FROM base AS runner

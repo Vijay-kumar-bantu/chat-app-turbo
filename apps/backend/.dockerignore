@@ -12,7 +12,9 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+.env*
 
 # Ignore other typical development-related files
 .vscode/
 .idea/
+.out/

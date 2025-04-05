@@ -15,7 +15,7 @@ COPY . .
    
 
 # Install dependencies
-RUN pnpm install
+# RUN pnpm install
 
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
 RUN turbo prune frontend --docker
@@ -32,6 +32,7 @@ RUN pnpm install
  
 # Build the project
 COPY --from=builder /frontend/out/full/ .
+COPY ./apps/frontend/.env.prod ./apps/frontend/.env
 RUN pnpm turbo build
  
 FROM nginx:alpine AS production

@@ -8,10 +8,10 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Ignore environment files (for security reasons)
-# .env
-# .env.local
-# .env.*.local
+Ignore environment files (for security reasons)
+.env
+.env.local
+.env*
 
 # Ignore other typical development-related files
 .vscode/

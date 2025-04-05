@@ -6,8 +6,11 @@ import cors from "cors";
 import "dotenv/config";
 import authRouter from "./routes/authRoute";
 import friendRouter from "./routes/friendRoute";
+import protectedRoute from "./middlewares/protectedRoute";
 
 const app = express();
+
+console.log("env test", process.env.MONGODB_URL);
 
 //connecting to mongodb
 mongoose
@@ -21,7 +24,7 @@ app.use(cors({ origin: "*" }));
 
 //routes
 app.use("/auth", authRouter);
-app.use("/friend", friendRouter);
+app.use("/friend", protectedRoute, friendRouter);
 
 //express routes
 app.get("/", (req, res) => {

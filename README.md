@@ -35,6 +35,18 @@ This monorepo has the following tools pre-configured:
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting
 
+### Setup Environment Variables
+
+Before running the application, ensure you create `.env` files for both the `frontend` and `backend` applications. Use the `.env.example` files provided in their respective directories as a reference.
+
+```sh
+# For frontend
+cp apps/frontend/.env.example apps/frontend/.env
+
+# For backend
+cp apps/backend/.env.example apps/backend/.env
+```
+
 ### Build
 
 To build all apps and packages, run the following command:
@@ -58,12 +70,12 @@ To run the application using Docker, ensure you have Docker and Docker Compose i
 1. Build the Docker images and start the containers:
 
    ```sh
-   docker-compose up --build
+   docker-compose up -d --build
    ```
 
 2. The application will be available at the respective ports defined in the `docker-compose.yml` file.
 
-3. To stop the containers, use:
+3. To stop and remove the containers, use:
 
    ```sh
    docker-compose down

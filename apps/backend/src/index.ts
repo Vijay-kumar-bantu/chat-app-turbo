@@ -10,8 +10,6 @@ import protectedRoute from "./middlewares/protectedRoute";
 
 const app = express();
 
-console.log("env test", process.env.MONGODB_URL);
-
 //connecting to mongodb
 mongoose
 	.connect(process.env.MONGODB_URL || "mongodb://mongodb123:27017/chatapp")

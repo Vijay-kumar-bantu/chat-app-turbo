@@ -6,7 +6,7 @@ export default function useSocket() {
 	const { user, addUserMessages, setOnlineUsers } = useAuth();
 
 	useEffect(() => {
-		const webSocket = new WebSocket("ws://localhost:8080");
+		const webSocket = new WebSocket(import.meta.env.VITE_WEB_SOCKET_GATEWAY);
 		if (user?.id) {
 			setSocket(webSocket);
 

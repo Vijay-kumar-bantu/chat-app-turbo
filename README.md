@@ -37,7 +37,7 @@ This monorepo has the following tools pre-configured:
 
 ### Setup Environment Variables
 
-Before running the application, ensure you create `.env` files for both the `frontend` and `backend` applications. Use the `.env.example` files provided in their respective directories as a reference.
+Before running the application, ensure you create `.env` for dev and `.env.prod`for docker for both the `frontend` and `backend` applications. Use the `.env.example` files provided in their respective directories as a reference.
 
 ```sh
 # For frontend

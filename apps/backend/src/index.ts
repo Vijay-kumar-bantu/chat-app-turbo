@@ -7,6 +7,7 @@ import "dotenv/config";
 import authRouter from "./routes/authRoute";
 import friendRouter from "./routes/friendRoute";
 import protectedRoute from "./middlewares/protectedRoute";
+import limiter from "./middlewares/rateLimiter";
 
 const app = express();
 
@@ -19,6 +20,7 @@ mongoose
 //middlewares for express server
 app.use(express.json());
 app.use(cors({ origin: "*" }));
+app.use(limiter); // Apply rate limiting middleware
 
 //routes
 app.use("/auth", authRouter);

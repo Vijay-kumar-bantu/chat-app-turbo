@@ -24,7 +24,7 @@
         "node": ">=18"
     },
     "lint-staged": {
-        "*.{ts,tsx,md}": [
+        "*.{ts,tsx,md,js}": [
             "pnpm lint",
             "pnpm format:write"
         ]

@@ -13,9 +13,9 @@ const app = express();
 
 //connecting to mongodb
 mongoose
-	.connect(process.env.MONGODB_URL || "mongodb://mongodb123:27017/chatapp")
-	.then(() => console.log("Connected to MongoDB"))
-	.catch((err) => console.log(err));
+    .connect(process.env.MONGODB_URL || "mongodb://mongodb123:27017/chatapp")
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(err => console.log(err));
 
 //middlewares for express server
 app.use(express.json());
@@ -28,14 +28,14 @@ app.use("/friend", protectedRoute, friendRouter);
 
 //express routes
 app.get("/", (req, res) => {
-	res.send("Hello World!");
+    res.send("Hello World!");
 });
 
 //setting up the websocket server with express server
 const wss = new WebSocketServer({
-	server: app.listen(process.env.SERVER_PORT || 8080, () =>
-		console.log(`Listening on port ${process.env.SERVER_PORT || 8080}`)
-	),
+    server: app.listen(process.env.SERVER_PORT || 8080, () =>
+        console.log(`Listening on port ${process.env.SERVER_PORT || 8080}`)
+    ),
 });
 
 const clients: client = {};
@@ -43,66 +43,66 @@ const onlineUsers: Set<string> = new Set();
 
 //websocket events
 wss.on("connection", function connection(ws: WebSocket) {
-	ws.on("error", (err) => {
-		console.log(err);
-	});
+    ws.on("error", err => {
+        console.log(err);
+    });
 
-	ws.on("message", function message(data) {
-		const message = JSON.parse(String(data));
-		switch (message.type) {
-			case "connect":
-				clients[message.id] = ws;
-				onlineUsers.add(message.id);
-				// Broadcast to all clients that this user is online
-				broadcastUserStatus(message.id, true);
-				// Send current online users to the new connection
-				ws.send(
-					JSON.stringify({
-						type: "onlineUsers",
-						users: Array.from(onlineUsers),
-					})
-				);
-				break;
-			case "message":
-				if (clients[message.to]) {
-					clients[message.to]?.send(JSON.stringify(message));
-				} else {
-					ws.send("user is offline");
-				}
-				break;
-			default:
-				console.log("Error");
-		}
-	});
+    ws.on("message", function message(data) {
+        const message = JSON.parse(String(data));
+        switch (message.type) {
+            case "connect":
+                clients[message.id] = ws;
+                onlineUsers.add(message.id);
+                // Broadcast to all clients that this user is online
+                broadcastUserStatus(message.id, true);
+                // Send current online users to the new connection
+                ws.send(
+                    JSON.stringify({
+                        type: "onlineUsers",
+                        users: Array.from(onlineUsers),
+                    })
+                );
+                break;
+            case "message":
+                if (clients[message.to]) {
+                    clients[message.to]?.send(JSON.stringify(message));
+                } else {
+                    ws.send("user is offline");
+                }
+                break;
+            default:
+                console.log("Error");
+        }
+    });
 
-	ws.on("close", () => {
-		let disconnectedUserId: string | null = null;
-		Object.keys(clients).forEach((key: string) => {
-			if (clients[key] === ws) {
-				disconnectedUserId = key;
-				delete clients[key];
-				onlineUsers.delete(key);
-			}
-		});
+    ws.on("close", () => {
+        let disconnectedUserId: string | null = null;
+        Object.keys(clients).forEach((key: string) => {
+            if (clients[key] === ws) {
+                disconnectedUserId = key;
+                delete clients[key];
+                onlineUsers.delete(key);
+            }
+        });
 
-		if (disconnectedUserId) {
-			// Broadcast to all clients that this user is offline
-			broadcastUserStatus(disconnectedUserId, false);
-		}
-	});
+        if (disconnectedUserId) {
+            // Broadcast to all clients that this user is offline
+            broadcastUserStatus(disconnectedUserId, false);
+        }
+    });
 });
 
 // Helper function to broadcast user status changes
 function broadcastUserStatus(userId: string, isOnline: boolean) {
-	const statusMessage = JSON.stringify({
-		type: "userStatus",
-		userId,
-		isOnline,
-	});
+    const statusMessage = JSON.stringify({
+        type: "userStatus",
+        userId,
+        isOnline,
+    });
 
-	Object.values(clients).forEach((client) => {
-		if (client.readyState === WebSocket.OPEN) {
-			client.send(statusMessage);
-		}
-	});
+    Object.values(clients).forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(statusMessage);
+        }
+    });
 }

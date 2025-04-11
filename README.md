@@ -69,17 +69,17 @@ To run the application using Docker, ensure you have Docker and Docker Compose i
 
 1. Build the Docker images and start the containers:
 
-   ```sh
-   docker-compose up -d --build
-   ```
+    ```sh
+    docker-compose up -d --build
+    ```
 
 2. The application will be available at the respective ports defined in the `docker-compose.yml` file.
 
 3. To stop and remove the containers, use:
 
-   ```sh
-   docker-compose down
-   ```
+    ```sh
+    docker-compose down
+    ```
 
 Make sure to check the `docker-compose.yml` file for configuration details.
 

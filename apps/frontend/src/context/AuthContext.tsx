@@ -5,62 +5,58 @@ import { User, AuthContextType, UserMessages, Friend } from "../types/auth";
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-	const [user, setUser] = useState<User | null>(null);
-	const [userMessages, setUserMessages] = useState<UserMessages | null>(null);
-	const [onlineUsers, setOnlineUsers] = useState<Set<string>>(new Set());
-	// const socket = useSocket();
+    const [user, setUser] = useState<User | null>(null);
+    const [userMessages, setUserMessages] = useState<UserMessages | null>(null);
+    const [onlineUsers, setOnlineUsers] = useState<Set<string>>(new Set());
+    // const socket = useSocket();
 
-	const addUser = (user: User) => {
-		setUser(user);
-	};
+    const addUser = (user: User) => {
+        setUser(user);
+    };
 
-	const addUserFriend = (friend: Friend) => {
-		//@ts-ignore
-		setUser((prev) => ({
-			...prev,
-			friends: [...(prev?.friends || []), friend],
-		}));
-	};
+    const addUserFriend = (friend: Friend) => {
+        //@ts-expect-error expecting type error here
+        setUser(prev => ({
+            ...prev,
+            friends: [...(prev?.friends || []), friend],
+        }));
+    };
 
-	const addUserMessages = (
-		from: string,
-		type: "sender" | "receiver",
-		message: string
-	) => {
-		setUserMessages((prev) => ({
-			...prev,
-			[from]: [...(prev?.[from] || []), { type, message }],
-		}));
-	};
+    const addUserMessages = (from: string, type: "sender" | "receiver", message: string) => {
+        setUserMessages(prev => ({
+            ...prev,
+            [from]: [...(prev?.[from] || []), { type, message }],
+        }));
+    };
 
-	const logout = () => {
-		setUser(null);
-		setUserMessages(null);
-	};
+    const logout = () => {
+        setUser(null);
+        setUserMessages(null);
+    };
 
-	return (
-		<AuthContext.Provider
-			value={{
-				user,
-				addUser,
-				userMessages,
-				addUserMessages,
-				logout,
-				isAuthenticated: !!user,
-				onlineUsers,
-				setOnlineUsers,
-				addUserFriend,
-			}}
-		>
-			{children}
-		</AuthContext.Provider>
-	);
+    return (
+        <AuthContext.Provider
+            value={{
+                user,
+                addUser,
+                userMessages,
+                addUserMessages,
+                logout,
+                isAuthenticated: !!user,
+                onlineUsers,
+                setOnlineUsers,
+                addUserFriend,
+            }}
+        >
+            {children}
+        </AuthContext.Provider>
+    );
 }
 
 export function useAuth() {
-	const context = useContext(AuthContext);
-	if (context === undefined) {
-		throw new Error("useAuth must be used within an AuthProvider");
-	}
-	return context;
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error("useAuth must be used within an AuthProvider");
+    }
+    return context;
 }

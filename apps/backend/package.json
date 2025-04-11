@@ -6,7 +6,8 @@
 	"scripts": {
 		"build": "pnpm dlx esbuild ./src/index.ts --bundle --platform=node --outfile=dist/index.js",
 		"start": "node dist/index.js",
-		"dev": "pnpm run build && node dist/index.js"
+		"dev": "pnpm run build && node dist/index.js",
+		"lint": "eslint src/**/*.ts"
 	},
 	"keywords": [],
 	"author": "Vijay Kumar Bantu",
@@ -21,6 +22,7 @@
 		"ws": "^8.18.0"
 	},
 	"devDependencies": {
+		"@repo/eslint-config": "workspace:*",
 		"@repo/typescript-config": "workspace:*",
 		"@repo/utils": "workspace:*",
 		"@types/cors": "^2.8.17",

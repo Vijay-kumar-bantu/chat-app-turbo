@@ -8,8 +8,8 @@
         "dev": "turbo dev",
         "lint": "turbo lint --",
         "start": "turbo start",
-        "format:write": "prettier --write \"**/*.{ts,js,tsx,md}\"",
-        "format:check": "prettier --check \"**/*.{ts,js,tsx,md}\"",
+        "format:write": "prettier --write \"**/*.{ts,js,tsx,md,json}\"",
+        "format:check": "prettier --check \"**/*.{ts,js,tsx,md,json}\"",
         "prepare": "husky"
     },
     "devDependencies": {

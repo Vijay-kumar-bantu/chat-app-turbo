@@ -1,35 +1,35 @@
 {
-	"name": "backend",
-	"version": "1.0.0",
-	"private": true,
-	"main": "index.js",
-	"scripts": {
-		"build": "pnpm dlx esbuild ./src/index.ts --bundle --platform=node --outfile=dist/index.js",
-		"start": "node dist/index.js",
-		"dev": "pnpm run build && node dist/index.js",
-		"lint": "eslint src/**/*.ts"
-	},
-	"keywords": [],
-	"author": "Vijay Kumar Bantu",
-	"license": "ISC",
-	"description": "",
-	"dependencies": {
-		"cors": "^2.8.5",
-		"dotenv": "^16.4.7",
-		"express": "^4.21.1",
-		"express-rate-limit": "^7.5.0",
-		"mongoose": "^8.8.4",
-		"ws": "^8.18.0"
-	},
-	"devDependencies": {
-		"@repo/eslint-config": "workspace:*",
-		"@repo/typescript-config": "workspace:*",
-		"@repo/utils": "workspace:*",
-		"@types/cors": "^2.8.17",
-		"@types/express": "^5.0.0",
-		"@types/mongoose": "^5.11.96",
-		"@types/ws": "^8.5.13",
-		"esbuild": "^0.25.1",
-		"typescript": "^5.7.2"
-	}
+    "name": "backend",
+    "version": "1.0.0",
+    "private": true,
+    "main": "index.js",
+    "scripts": {
+        "build": "pnpm dlx esbuild ./src/index.ts --bundle --platform=node --outfile=dist/index.js",
+        "start": "node dist/index.js",
+        "dev": "pnpm run build && node dist/index.js",
+        "lint": "eslint src/**/*.ts --fix"
+    },
+    "keywords": [],
+    "author": "Vijay Kumar Bantu",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.1",
+        "express-rate-limit": "^7.5.0",
+        "mongoose": "^8.8.4",
+        "ws": "^8.18.0"
+    },
+    "devDependencies": {
+        "@repo/eslint-config": "workspace:*",
+        "@repo/typescript-config": "workspace:*",
+        "@repo/utils": "workspace:*",
+        "@types/cors": "^2.8.17",
+        "@types/express": "^5.0.0",
+        "@types/mongoose": "^5.11.96",
+        "@types/ws": "^8.5.13",
+        "esbuild": "^0.25.1",
+        "typescript": "^5.7.2"
+    }
 }

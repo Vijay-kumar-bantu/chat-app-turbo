@@ -1,5 +1,5 @@
 
-FROM node:18-alpine AS base
+FROM node:23-alpine AS base
 RUN corepack enable
  
 FROM base AS builder
@@ -35,7 +35,7 @@ COPY --from=builder /frontend/out/full/ .
 COPY ./apps/frontend/.env.prod ./apps/frontend/.env
 RUN pnpm turbo build
  
-FROM nginx:alpine AS production
+FROM nginx:stable-alpine AS production
 WORKDIR /frontend
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 

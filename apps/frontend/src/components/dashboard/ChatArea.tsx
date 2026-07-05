@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Friend, message } from "../../types/auth";
-import { useAuth } from "../../context/AuthContext";
-import useSocket from "../../hooks/useSocket";
+import { useEffect, useState } from 'react';
+import { Friend, message } from '../../types/auth';
+import { useAuth } from '../../context/AuthContext';
+import useSocket from '../../hooks/useSocket';
 
 interface ChatAreaProps {
     selectedChat: Friend | null;
@@ -9,13 +9,13 @@ interface ChatAreaProps {
 
 export function ChatArea({ selectedChat }: ChatAreaProps) {
     const { user, addUserMessages, userMessages, onlineUsers } = useAuth();
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState('');
     const [messages, setMessages] = useState<message[]>([]);
     const socket = useSocket();
 
     useEffect(() => {
-        if (userMessages?.[selectedChat?._id || ""]) {
-            setMessages(userMessages[selectedChat?._id || ""]);
+        if (userMessages?.[selectedChat?._id || '']) {
+            setMessages(userMessages[selectedChat?._id || '']);
         } else {
             setMessages([]);
         }
@@ -24,7 +24,7 @@ export function ChatArea({ selectedChat }: ChatAreaProps) {
     const handleSend = () => {
         if (message.trim() && selectedChat?._id) {
             if (!onlineUsers.has(selectedChat._id)) {
-                alert("User is offline");
+                alert('User is offline');
                 return;
             }
             user?.friends?.map(friend => {
@@ -34,14 +34,14 @@ export function ChatArea({ selectedChat }: ChatAreaProps) {
             });
             socket?.send(
                 JSON.stringify({
-                    type: "message",
+                    type: 'message',
                     from: user?.id,
                     to: selectedChat?._id,
                     message,
-                })
+                }),
             );
-            addUserMessages(selectedChat?._id, "sender", message);
-            setMessage("");
+            addUserMessages(selectedChat?._id, 'sender', message);
+            setMessage('');
         }
     };
 
@@ -83,7 +83,7 @@ export function ChatArea({ selectedChat }: ChatAreaProps) {
                     <div key={index} className="my-2">
                         <h3
                             className={`text-gray-900 dark:text-white flex max-w-1/6 ${
-                                message.type === "sender" ? "justify-end" : "justify-start"
+                                message.type === 'sender' ? 'justify-end' : 'justify-start'
                             }`}
                         >
                             <span className="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg">{message.message}</span>
@@ -100,7 +100,7 @@ export function ChatArea({ selectedChat }: ChatAreaProps) {
                         onChange={e => setMessage(e.target.value)}
                         placeholder="Type a message..."
                         className="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:text-white"
-                        onKeyUp={e => e.key === "Enter" && handleSend()}
+                        onKeyUp={e => e.key === 'Enter' && handleSend()}
                     />
                     <button
                         onClick={handleSend}

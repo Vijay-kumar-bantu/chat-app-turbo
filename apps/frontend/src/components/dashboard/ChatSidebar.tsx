@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Search, UserPlus, LogOut, Sun, Moon } from "lucide-react";
-import { useTheme } from "../../context/ThemeContext";
-import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { FriendRequestsModal } from "../friends/FriendRequestsModal";
-import { Friend } from "../../types/auth";
-import useSocket from "../../hooks/useSocket";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Search, UserPlus, LogOut, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { FriendRequestsModal } from '../friends/FriendRequestsModal';
+import { Friend } from '../../types/auth';
+import useSocket from '../../hooks/useSocket';
 
 interface ChatSidebarProps {
     selectedChat: Friend | null;
@@ -22,8 +22,12 @@ export function ChatSidebar({ selectedChat, onSelectChat }: ChatSidebarProps) {
 
     const handleLogout = () => {
         logout();
-        navigate("/login");
+        navigate('/login');
         socket?.close();
+    };
+
+    const handleProfile = () => {
+        return navigate('/profile');
     };
 
     return (
@@ -36,7 +40,12 @@ export function ChatSidebar({ selectedChat, onSelectChat }: ChatSidebarProps) {
                 <div className="p-4 border-b border-gray-200 dark:border-gray-700">
                     <div className="flex items-center justify-between mb-4">
                         <div>
-                            <img src={user?.avatar} alt={user?.name} className="w-9 h-9 rounded-full" />
+                            <img
+                                src={user?.avatar}
+                                alt={user?.name}
+                                className="w-9 h-9 rounded-full cursor-pointer"
+                                onClick={handleProfile}
+                            />
                         </div>
                         <div className="flex items-center space-x-2">
                             <motion.button
@@ -45,7 +54,7 @@ export function ChatSidebar({ selectedChat, onSelectChat }: ChatSidebarProps) {
                                 onClick={toggleTheme}
                                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                             >
-                                {theme === "light" ? (
+                                {theme === 'light' ? (
                                     <Moon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                                 ) : (
                                     <Sun className="w-5 h-5 text-gray-600 dark:text-gray-300" />
@@ -90,7 +99,7 @@ export function ChatSidebar({ selectedChat, onSelectChat }: ChatSidebarProps) {
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => onSelectChat(friend)}
                                 className={`w-full p-3 rounded-lg flex items-center space-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                                    selectedChat?.name === friend.name ? "bg-gray-100 dark:bg-gray-700" : ""
+                                    selectedChat?.name === friend.name ? 'bg-gray-100 dark:bg-gray-700' : ''
                                 }`}
                             >
                                 <div className="relative">
@@ -111,7 +120,7 @@ export function ChatSidebar({ selectedChat, onSelectChat }: ChatSidebarProps) {
                                     <h3 className="font-medium text-gray-900 dark:text-white">{friend.name}</h3>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">
                                         {userMessages?.[friend._id]?.[userMessages?.[friend._id]?.length - 1]
-                                            ?.message || "No messages yet"}
+                                            ?.message || 'No messages yet'}
                                     </p>
                                 </div>
                             </motion.button>

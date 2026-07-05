@@ -1,7 +1,7 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Users, Shield, Zap } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Users, Shield, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export function Hero() {
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ export function Hero() {
                 className="flex justify-center space-x-4 mb-16"
             >
                 <motion.button
-                    onClick={() => navigate("/login")}
+                    onClick={() => navigate('/login')}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="bg-indigo-600 dark:bg-indigo-500 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition flex items-center"

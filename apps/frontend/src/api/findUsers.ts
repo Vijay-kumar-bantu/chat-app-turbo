@@ -1,8 +1,8 @@
 const findUsers = async (id: string) => {
     const response = await fetch(import.meta.env.VITE_ALL_FRIENDS_API, {
-        method: "POST",
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${id}`,
         },
         body: JSON.stringify({ id }),

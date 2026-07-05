@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
-import { MessageSquare } from "lucide-react";
-import { ThemeToggle } from "../common/ThemeToggle";
-import { useNavigate } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { MessageSquare } from 'lucide-react';
+import { ThemeToggle } from '../common/ThemeToggle';
+import { useNavigate } from 'react-router-dom';
 
 export function Header() {
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ export function Header() {
                         </motion.a>
                         <ThemeToggle />
                         <motion.button
-                            onClick={() => navigate("/login")}
+                            onClick={() => navigate('/login')}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="bg-indigo-600 dark:bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition"

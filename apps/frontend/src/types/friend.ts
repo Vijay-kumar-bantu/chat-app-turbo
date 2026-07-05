@@ -3,7 +3,7 @@ export interface FriendRequest {
     senderId: string;
     senderName: string;
     senderAvatar: string;
-    status: "pending" | "accepted" | "rejected";
+    status: 'pending' | 'accepted' | 'rejected';
     timestamp: string;
 }
 
@@ -11,6 +11,6 @@ export interface Friend {
     id: string;
     name: string;
     avatar: string;
-    status: "online" | "offline";
+    status: 'online' | 'offline';
     lastSeen?: string;
 }

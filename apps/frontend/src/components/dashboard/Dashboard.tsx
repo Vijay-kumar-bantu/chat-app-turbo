@@ -1,7 +1,7 @@
-import React from "react";
-import { ChatSidebar } from "./ChatSidebar";
-import { ChatArea } from "./ChatArea";
-import { Friend } from "../../types/auth";
+import React from 'react';
+import { ChatSidebar } from './ChatSidebar';
+import { ChatArea } from './ChatArea';
+import { Friend } from '../../types/auth';
 
 export function Dashboard() {
     const [selectedChat, setSelectedChat] = React.useState<Friend | null>(null);

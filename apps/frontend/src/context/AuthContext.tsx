@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
-import { User, AuthContextType, UserMessages, Friend } from "../types/auth";
+import React, { createContext, useContext, useState } from 'react';
+import { User, AuthContextType, UserMessages, Friend } from '../types/auth';
 // import useSocket from "../hooks/useSocket";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }));
     };
 
-    const addUserMessages = (from: string, type: "sender" | "receiver", message: string) => {
+    const addUserMessages = (from: string, type: 'sender' | 'receiver', message: string) => {
         setUserMessages(prev => ({
             ...prev,
             [from]: [...(prev?.[from] || []), { type, message }],
@@ -56,7 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
     const context = useContext(AuthContext);
     if (context === undefined) {
-        throw new Error("useAuth must be used within an AuthProvider");
+        throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
 }

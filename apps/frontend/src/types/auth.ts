@@ -4,7 +4,7 @@ export interface Friend {
     email: string;
     avatar: string;
     lastMessage?: string;
-    status?: "online" | "offline";
+    status?: 'online' | 'offline';
 }
 
 export interface User {
@@ -21,7 +21,7 @@ export interface AuthContextType {
     onlineUsers: Set<string>;
     setOnlineUsers: React.Dispatch<React.SetStateAction<Set<string>>>;
     userMessages: UserMessages | null;
-    addUserMessages: (from: string, type: "sender" | "receiver", message: string) => void;
+    addUserMessages: (from: string, type: 'sender' | 'receiver', message: string) => void;
     addUser: (user: User) => void;
     addUserFriend: (friend: Friend) => void;
     logout: () => void;
@@ -29,7 +29,7 @@ export interface AuthContextType {
 }
 
 export interface message {
-    type: "sender" | "receiver";
+    type: 'sender' | 'receiver';
     message: string;
 }
 

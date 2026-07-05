@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Search, UserPlus, Check, X as XMark } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-import findUsers from "../../api/findUsers";
-import sendRequest from "../../api/send-request";
-import addFriend from "../../api/add-friend";
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Search, UserPlus, Check, X as XMark } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import findUsers from '../../api/findUsers';
+import sendRequest from '../../api/send-request';
+import addFriend from '../../api/add-friend';
 interface FriendRequestsModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
 export function FriendRequestsModal({ isOpen, onClose }: FriendRequestsModalProps) {
-    const [activeTab, setActiveTab] = useState<"requests" | "search">("requests");
-    const [searchQuery, setSearchQuery] = useState("");
+    const [activeTab, setActiveTab] = useState<'requests' | 'search'>('requests');
+    const [searchQuery, setSearchQuery] = useState('');
     const { user, addUserFriend } = useAuth();
     const [users, setUsers] = useState<any[]>([]);
     useEffect(() => {
         const fetchUsers = async () => {
-            const users = await findUsers(user?.id || "");
+            const users = await findUsers(user?.id || '');
             setUsers(users);
         };
         if (user?.id) {
@@ -43,9 +43,9 @@ export function FriendRequestsModal({ isOpen, onClose }: FriendRequestsModalProp
             const data = await response.json();
             addUserFriend(data);
             onClose();
-            alert("Friend added successfully");
+            alert('Friend added successfully');
         } else {
-            alert("Error adding friend");
+            alert('Error adding friend');
         }
     };
 
@@ -54,9 +54,9 @@ export function FriendRequestsModal({ isOpen, onClose }: FriendRequestsModalProp
         if (response.ok) {
             // const data = await response.json();
             onClose();
-            alert("Friend request sent successfully");
+            alert('Friend request sent successfully');
         } else {
-            alert("Error sending friend request");
+            alert('Error sending friend request');
         }
     };
 
@@ -94,21 +94,21 @@ export function FriendRequestsModal({ isOpen, onClose }: FriendRequestsModalProp
                                 <div className="flex">
                                     <button
                                         className={`flex-1 py-3 text-sm font-medium ${
-                                            activeTab === "requests"
-                                                ? "text-indigo-600 border-b-2 border-indigo-600"
-                                                : "text-gray-500 dark:text-gray-400"
+                                            activeTab === 'requests'
+                                                ? 'text-indigo-600 border-b-2 border-indigo-600'
+                                                : 'text-gray-500 dark:text-gray-400'
                                         }`}
-                                        onClick={() => setActiveTab("requests")}
+                                        onClick={() => setActiveTab('requests')}
                                     >
                                         Pending Requests
                                     </button>
                                     <button
                                         className={`flex-1 py-3 text-sm font-medium ${
-                                            activeTab === "search"
-                                                ? "text-indigo-600 border-b-2 border-indigo-600"
-                                                : "text-gray-500 dark:text-gray-400"
+                                            activeTab === 'search'
+                                                ? 'text-indigo-600 border-b-2 border-indigo-600'
+                                                : 'text-gray-500 dark:text-gray-400'
                                         }`}
-                                        onClick={() => setActiveTab("search")}
+                                        onClick={() => setActiveTab('search')}
                                     >
                                         Find Friends
                                     </button>
@@ -116,7 +116,7 @@ export function FriendRequestsModal({ isOpen, onClose }: FriendRequestsModalProp
                             </div>
 
                             <div className="p-4">
-                                {activeTab === "requests" ? (
+                                {activeTab === 'requests' ? (
                                     <motion.div
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
@@ -152,7 +152,7 @@ export function FriendRequestsModal({ isOpen, onClose }: FriendRequestsModalProp
                                                             <Check
                                                                 className="w-5 h-5"
                                                                 onClick={() =>
-                                                                    handleAddfriend(user?.id || "", request._id)
+                                                                    handleAddfriend(user?.id || '', request._id)
                                                                 }
                                                             />
                                                         </button>
@@ -217,7 +217,7 @@ export function FriendRequestsModal({ isOpen, onClose }: FriendRequestsModalProp
                                                 <button className="p-2 text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-full">
                                                     <UserPlus
                                                         className="w-5 h-5"
-                                                        onClick={() => handleSendRequest(user?.id || "", result.id)}
+                                                        onClick={() => handleSendRequest(user?.id || '', result.id)}
                                                     />
                                                 </button>
                                             </motion.div>

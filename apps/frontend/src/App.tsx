@@ -1,13 +1,14 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { ThemeProvider } from "./context/ThemeContext";
-import { AuthProvider } from "./context/AuthContext";
-import { Header } from "./components/layout/Header";
-import { Hero } from "./components/home/Hero";
-import { Features } from "./components/home/Features";
-import { LoginForm } from "./components/auth/LoginForm";
-import { Dashboard } from "./components/dashboard/Dashboard";
-import { PrivateRoute } from "./components/auth/PrivateRoute";
-import { RegisterForm } from "./components/auth/RegisterForm";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthContext';
+import { Header } from './components/layout/Header';
+import { Hero } from './components/home/Hero';
+import { Features } from './components/home/Features';
+import { LoginForm } from './components/auth/LoginForm';
+import { Dashboard } from './components/dashboard/Dashboard';
+import { PrivateRoute } from './components/auth/PrivateRoute';
+import { RegisterForm } from './components/auth/RegisterForm';
+import Profile from './components/profile/Profile';
 
 function App() {
     return (
@@ -34,6 +35,14 @@ function App() {
                             element={
                                 <PrivateRoute>
                                     <Dashboard />
+                                </PrivateRoute>
+                            }
+                        />
+                        <Route
+                            path="/profile"
+                            element={
+                                <PrivateRoute>
+                                    <Profile />
                                 </PrivateRoute>
                             }
                         />

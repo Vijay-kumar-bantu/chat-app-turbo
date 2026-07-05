@@ -1,6 +1,6 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { MessageSquare, Video, Image, Lock, Globe, Clock } from "lucide-react";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { MessageSquare, Video, Image, Lock, Globe, Clock } from 'lucide-react';
 
 export function Features() {
     return (

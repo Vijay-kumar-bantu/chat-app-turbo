@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -6,13 +6,13 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     avatar: { type: String, required: true },
     friends: {
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
         default: [],
     },
     requests: {
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
         default: [],
     },
 });
 
-export default mongoose.model("user", userSchema);
+export default mongoose.model('user', userSchema);

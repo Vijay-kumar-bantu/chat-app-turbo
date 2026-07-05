@@ -1,32 +1,32 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { MessageSquare } from "lucide-react";
-import register from "../../api/register";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { MessageSquare } from 'lucide-react';
+import register from '../../api/register';
 
 export function RegisterForm() {
-    const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [error, setError] = useState<string>("");
+    const [name, setName] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [error, setError] = useState<string>('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             if (name.length === 0 || email.length === 0 || password.length === 0) {
-                setError("Enter details");
+                setError('Enter details');
             } else {
                 const res = await register(name, email, password);
                 if (res.status === 200) {
                     alert(await res.text());
-                    navigate("/login");
+                    navigate('/login');
                 } else {
                     setError(await res.text());
                 }
             }
         } catch (err) {
             console.log(err);
-            setError("Enter all details");
+            setError('Enter all details');
         }
     };
 
@@ -34,7 +34,7 @@ export function RegisterForm() {
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
             <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
                 <div className="text-center">
-                    <div className="flex justify-center" onClick={() => navigate("/")}>
+                    <div className="flex justify-center" onClick={() => navigate('/')}>
                         <MessageSquare className="h-12 w-12 text-indigo-600 dark:text-indigo-400 cursor-pointer" />
                     </div>
                     <h2 className="mt-6 text-3xl font-bold text-gray-900 dark:text-white">Welcome to ChatSpace</h2>
@@ -51,7 +51,7 @@ export function RegisterForm() {
                             type="text"
                             value={name}
                             onChange={e => {
-                                setError("");
+                                setError('');
                                 setName(e.target.value);
                             }}
                             className="mt-1 block w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:text-white"
@@ -96,7 +96,7 @@ export function RegisterForm() {
                 </form>
 
                 <p className="mt-2 text-gray-600 dark:text-gray-300">
-                    Already have an account?{" "}
+                    Already have an account?{' '}
                     <a href="/login" className="text-indigo-400">
                         Sign in
                     </a>

@@ -1,16 +1,21 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
+
+const resJson = { message: 'Unauthorized' };
 
 const protectedRoute = (req: Request, res: Response, next: NextFunction) => {
-    if (req.headers.authorization) {
-        const token = req.headers.authorization.split(" ")[1];
-        if (token) {
-            next();
-        } else {
-            res.status(401).json({ message: "Unauthorized" });
-        }
-    } else {
-        res.status(401).json({ message: "Unauthorized" });
+    if (!req.headers.authorization) {
+        res.status(401).json(resJson);
+        return;
     }
+
+    const [, token] = req.headers.authorization.split(' ');
+
+    if (!token) {
+        res.status(401).json(resJson);
+        return;
+    }
+
+    next();
 };
 
 export default protectedRoute;
